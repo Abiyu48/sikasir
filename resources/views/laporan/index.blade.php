@@ -56,7 +56,7 @@
                                             <a href="{{ route('laporan.show', $customer->id) }}" 
                                                class="btn btn-sm btn-primary" 
                                                title="Lihat Detail">
-                                                <i class="fas fa-eye"></i> Detail
+                                                <i class="fas fa-eye"></i> hellp
                                             </a>
                                         </div>
                                     </td>
