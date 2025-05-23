@@ -67,9 +67,13 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/cart/remove/{id}', [TransaksiController::class, 'removeFromCart'])->name('removeFromCart');  // Hapus produk dari keranjang
             Route::get('/cart/clear', [TransaksiController::class, 'clearCart'])->name('clearCart');    // Bersihkan keranjang
             Route::post('/simpan', [TransaksiController::class, 'simpanTransaksi'])->name('simpan');    // Simpan transaksi ke database
-            Route::get('/checkout/{id?}', [TransaksiController::class, 'checkout'])->name('checkout'); // Halaman checkout (optional id transaksi)
-            Route::post('/konfirmasi', [TransaksiController::class, 'konfirmasi'])->name('konfirmasi'); // Konfirmasi pembayaran
+            Route::get('/checkout', [TransaksiController::class, 'checkout'])->name('checkout');        
+            Route::get('/keranjang', [TransaksiController::class, 'getKeranjang'])->name('getKeranjang');
+            Route::get('/struk/{id}', [TransaksiController::class, 'cetakStruk'])->name('struk');
         });
+            Route::post('/checkout/konfirmasi', [TransaksiController::class, 'konfirmasiCheckout'])->name('checkout.konfirmasi'); // Konfirmasi checkout
+            Route::get('/checkout/batal', [TransaksiController::class, 'batalkanCheckout'])->name('checkout.batal'); // Batalkan checkout
+            
     });
 
     /*
@@ -79,6 +83,8 @@ Route::middleware(['auth'])->group(function () {
     */
     Route::middleware(['role:owner'])->group(function () {
         Route::get('/laporan', [LaporanController::class, 'index'])->name('laporan.index'); // Halaman laporan
+        Route::get('/customer/{customer}', [App\Http\Controllers\LaporanController::class, 'show'])->name('laporan.show');
+        Route::get('/detail/{penjualan}', [App\Http\Controllers\LaporanController::class, 'detail'])->name('laporan.detail');
     });
 
     /*

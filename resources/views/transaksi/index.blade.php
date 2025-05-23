@@ -123,7 +123,7 @@
                     </div>
                     <button class="btn btn-success btn-sm btn-add-cart w-100"
                       data-id="{{ $item->id }}"
-                      data-nama="{{ $item->nama_menu }}"
+                      data-nama="{{ $item->nama}}"
                       data-harga="{{ $item->harga }}"
                       data-stok="{{ $item->stok }}">Tambah ke Keranjang</button>
                   @else
@@ -443,14 +443,55 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     }
   });
+
+  // Filter kategori
+  document.getElementById('filterKategori').addEventListener('change', function () {
+    const selectedKategori = this.value;
+    const menuItems = document.querySelectorAll('.menu-item');
+    
+    menuItems.forEach(item => {
+      if (selectedKategori === '' || item.dataset.kategoriId === selectedKategori) {
+        item.style.display = 'block';
+      } else {
+        item.style.display = 'none';
+      }
+    });
+  });
+
+  // Search menu
+  document.getElementById('searchMenu').addEventListener('input', function () {
+    const searchTerm = this.value.toLowerCase();
+    const menuItems = document.querySelectorAll('.menu-item');
+    
+    menuItems.forEach(item => {
+      const menuName = item.querySelector('.menu-name').textContent.toLowerCase();
+      if (menuName.includes(searchTerm)) {
+        item.style.display = 'block';
+      } else {
+        item.style.display = 'none';
+      }
+    });
+  });
 });
 
 function submitKeranjang(event) {
-  if (document.getElementById('inputKeranjang').value === '[]' || document.getElementById('inputKeranjang').value === '') {
+  const keranjangData = document.getElementById('inputKeranjang').value;
+  
+  if (keranjangData === '[]' || keranjangData === '' || keranjangData === null) {
     alert('Keranjang masih kosong!');
     event.preventDefault();
     return false;
   }
+  
+  // Validasi field wajib
+  const atasNama = document.querySelector('input[name="atas_nama"]').value.trim();
+  if (atasNama === '') {
+    alert('Nama pemesan harus diisi!');
+    event.preventDefault();
+    return false;
+  }
+  
+  return true;
 }
 
 // Fungsi untuk reset stok ketika halaman di-refresh atau ada kesalahan
