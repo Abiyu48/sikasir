@@ -23,10 +23,6 @@
             </div>
             <div class="col-md-6">
               <div class="info-group">
-                <label class="fw-bold">Nama Customer:</label>
-                <p class="mb-2">{{ $nama_customer ?? 'Guest' }}</p>
-              </div>
-              <div class="info-group">
                 <label class="fw-bold">Status Pembayaran:</label>
                 <span class="badge bg-{{ $metode_pembayaran === 'cash' ? 'success' : 'primary' }}">
                   {{ ucfirst($metode_pembayaran ?? 'Belum Ditentukan') }}
@@ -88,25 +84,18 @@
             <div class="col-12">
               <div class="d-flex justify-content-between flex-wrap gap-2">
                 <div>
-                  <a href="{{ url('/transaksi') }}" class="btn btn-outline-secondary">
+                  <a href="{{ route('transaksi.index') }}" class="btn btn-outline-secondary">
                     <i class="fas fa-arrow-left"></i> Kembali ke Transaksi
                   </a>
-                  <a href="{{ url('/') }}" class="btn btn-danger ms-2">
+                  <a href="{{ route('checkout.batal') }}" class="btn btn-danger ms-2">
                     <i class="fas fa-times"></i> Batalkan Pesanan
                   </a>
                 </div>
                 <div>
-                  <form action="{{ route('transaksi.konfirmasi') }}" method="POST" class="d-inline">
+                  <form action="{{ route('checkout.konfirmasi') }}" method="POST" class="d-inline" id="checkoutForm">
                     @csrf
-                    <!-- Hidden inputs untuk data transaksi -->
-                    <input type="hidden" name="tanggal" value="{{ $tanggal ?? date('Y-m-d H:i:s') }}">
-                    <input type="hidden" name="no_bon" value="{{ $no_bon ?? 'TRX-' . date('YmdHis') }}">
-                    <input type="hidden" name="nama_customer" value="{{ $nama_customer ?? 'Guest' }}">
-                    <input type="hidden" name="metode_pembayaran" value="{{ $metode_pembayaran ?? 'cash' }}">
-                    <input type="hidden" name="grand_total" value="{{ $grandTotal }}">
-                    <input type="hidden" name="keranjang" value="{{ json_encode($keranjang) }}">
                     
-                    <button type="submit" class="btn btn-success btn-lg">
+                    <button type="submit" class="btn btn-success btn-lg" id="submitBtn">
                       <i class="fas fa-check"></i> Konfirmasi Pesanan
                     </button>
                   </form>
@@ -122,7 +111,7 @@
               </div>
               <h4 class="text-muted">Keranjang Kosong</h4>
               <p class="text-muted">Belum ada item yang ditambahkan ke keranjang.</p>
-              <a href="{{ url('/') }}" class="btn btn-primary">
+              <a href="{{ route('transaksi.index') }}" class="btn btn-primary">
                 <i class="fas fa-plus"></i> Tambah Item
               </a>
             </div>
@@ -156,12 +145,20 @@
 @push('scripts')
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-  const form = document.querySelector('form[action*="konfirmasi"]');
-  if (form) {
+  const form = document.getElementById('checkoutForm');
+  const submitBtn = document.getElementById('submitBtn');
+  
+  if (form && submitBtn) {
     form.addEventListener('submit', function(e) {
-      const button = this.querySelector('button[type="submit"]');
-      button.disabled = true;
-      button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Memproses...';
+      // Disable button to prevent double submission
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Memproses...';
+      
+      // Re-enable button after 5 seconds as fallback
+      setTimeout(function() {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '<i class="fas fa-check"></i> Konfirmasi Pesanan';
+      }, 5000);
     });
   }
 });

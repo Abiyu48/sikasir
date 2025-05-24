@@ -114,20 +114,20 @@ class TransaksiController extends Controller
     {
         $request->validate([
             'customer_id' => 'nullable|exists:customers,id',
-            'atas_nama' => 'required|string|max:255',
-            'status_pembayaran' => 'required|in:cash,transfer,debit,credit',
-            'order_type' => 'required|in:dine_in,take_away,delivery'
+            'status_pembayaran' => 'required|in:cash,cashless',
+            'order_type' => 'required|in:dine_in,take_away',
+            'keranjang' => 'required|string'
         ]);
 
-        // Ambil keranjang dari session
-        $keranjang = session()->get('keranjang', []);
-
-        if (empty($keranjang)) {
+        // Decode keranjang dari JSON
+        $keranjangData = json_decode($request->keranjang, true);
+        
+        if (empty($keranjangData)) {
             return redirect()->back()->with('error', 'Keranjang kosong! Silakan tambahkan menu terlebih dahulu.');
         }
 
         // Validasi stok sebelum checkout
-        foreach ($keranjang as $item) {
+        foreach ($keranjangData as $item) {
             $menu = Menu::find($item['id']);
             if (!$menu) {
                 return redirect()->back()->with('error', 'Menu ' . $item['nama'] . ' tidak ditemukan.');
@@ -137,13 +137,12 @@ class TransaksiController extends Controller
             }
         }
 
-        $noBon = 'BON-' . str_pad(rand(1, 9999), 4, '0', STR_PAD_LEFT) . '-' . now()->format('Ymd');
+        $noBon = $request->no_bon;
 
         // Simpan data checkout ke session
         session()->put('checkout', [
-            'keranjang' => $keranjang,
+            'keranjang' => $keranjangData,
             'customer_id' => $request->customer_id,
-            'atas_nama' => $request->atas_nama,
             'no_bon' => $noBon,
             'tanggal' => now()->format('d-m-Y H:i:s'),
             'status_pembayaran' => $request->status_pembayaran,
@@ -158,34 +157,35 @@ class TransaksiController extends Controller
     {
         $checkout = session('checkout');
 
-        if (!$checkout) {
-            return redirect()->route('transaksi.index')->with('error', 'Belum ada transaksi yang diproses.');
+        if (!$checkout || !isset($checkout['keranjang']) || count($checkout['keranjang']) == 0) {
+            return redirect()->route('transaksi.index')->with('error', 'Keranjang kosong. Silakan pilih menu terlebih dahulu.');
         }
 
-        // Cek apakah checkout sudah expired (1 jam)
-        if (isset($checkout['created_at']) && now()->diffInHours($checkout['created_at']) > 1) {
-            session()->forget('checkout');
-            return redirect()->route('transaksi.index')->with('error', 'Sesi checkout telah berakhir. Silakan buat transaksi baru.');
-        }
+        $keranjang = [];
 
-        // Validasi ulang stok saat checkout
         foreach ($checkout['keranjang'] as $item) {
-            $menu = Menu::find($item['id']);
+            $menu = Menu::with('kategori')->find($item['id']);
             if (!$menu || $menu->stok < $item['jumlah']) {
                 session()->forget('checkout');
                 return redirect()->route('transaksi.index')->with('error', 'Stok menu ' . $item['nama'] . ' sudah berubah. Silakan buat transaksi baru.');
             }
+
+            $keranjang[] = [
+                'id'         => $menu->id,
+                'nama'       => $menu->nama,
+                'harga'      => $menu->harga,
+                'jumlah'     => $item['jumlah'],
+                'keterangan' => $item['keterangan'] ?? '',
+                'kategori'   => $menu->kategori->nama ?? 'Tanpa Kategori',
+            ];
         }
 
-        // Ambil data untuk blade
-        $keranjang = $checkout['keranjang'] ?? [];
+        // Ambil data dari session checkout
         $tanggal = $checkout['tanggal'] ?? now()->format('d-m-Y H:i:s');
-        $no_bon = $checkout['no_bon'] ?? '-';
-        $nama_customer = $checkout['atas_nama'] ?? 'Guest';
+        $no_bon = $checkout['no_bon'] ?? 'TRX-' . now()->format('YmdHis');
         $metode_pembayaran = $checkout['status_pembayaran'] ?? 'cash';
-        $order_type = $checkout['order_type'] ?? 'dine_in';
 
-        return view('transaksi.checkout', compact('keranjang', 'tanggal', 'no_bon', 'nama_customer', 'metode_pembayaran', 'order_type'));
+        return view('transaksi.checkout', compact('keranjang', 'tanggal', 'no_bon','metode_pembayaran'));
     }
 
     public function konfirmasiCheckout(Request $request)
@@ -216,7 +216,6 @@ class TransaksiController extends Controller
                 'total' => 0,
                 'status_pembayaran' => $checkout['status_pembayaran'] ?? 'cash',
                 'order_type' => $checkout['order_type'] ?? 'dine_in',
-                'atas_nama' => $checkout['atas_nama']
             ]);
 
             $total = 0;
@@ -224,8 +223,9 @@ class TransaksiController extends Controller
                 $menu = Menu::findOrFail($item['id']);
                 
                 // Hitung pajak 10%
-                $pajak = $item['harga'] * 0.1;
-                $subtotal = ($item['harga'] + $pajak) * $item['jumlah'];
+                $subtotal_before_tax = $item['harga'] * $item['jumlah'];
+                $pajak = $subtotal_before_tax * 0.1;
+                $subtotal = $subtotal_before_tax + $pajak;
 
                 // Simpan detail penjualan
                 DetailPenjualan::create([
@@ -248,11 +248,11 @@ class TransaksiController extends Controller
 
             DB::commit();
             
-            // Hapus session
-            session()->forget('keranjang');
-            session()->forget('checkout');
+            // Hapus session checkout dan keranjang
+            session()->forget(['checkout', 'keranjang']);
 
-            return redirect()->route('transaksi.index')->with('success', 'Transaksi berhasil disimpan! No. Bon: ' . $checkout['no_bon']);
+            return redirect()->route('transaksi.struk', $penjualan->id)
+                        ->with('success', 'Transaksi berhasil disimpan! No. Bon: ' . $checkout['no_bon']);
 
         } catch (\Exception $e) {
             DB::rollBack();
@@ -265,25 +265,7 @@ class TransaksiController extends Controller
         session()->forget('checkout');
         return redirect()->route('transaksi.index')->with('info', 'Transaksi dibatalkan.');
     }
-
-    public function getKeranjang()
-    {
-        $keranjang = session()->get('keranjang', []);
-        $total = 0;
-        
-        foreach ($keranjang as $item) {
-            $pajak = $item['harga'] * 0.1;
-            $subtotal = ($item['harga'] + $pajak) * $item['jumlah'];
-            $total += $subtotal;
-        }
-
-        return response()->json([
-            'keranjang' => $keranjang,
-            'total_items' => count($keranjang),
-            'grand_total' => $total
-        ]);
-    }
-
+    
     public function cetakStruk($id)
     {
         $penjualan = Penjualan::with(['detailPenjualan.menu', 'customer'])
