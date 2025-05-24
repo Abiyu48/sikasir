@@ -407,7 +407,7 @@
                         <p class="page-subtitle">Analisis data penjualan berdasarkan customer</p>
                     </div>
                     <div class="page-actions">
-                        <button class="btn btn-export">
+                        <button class="btn btn-export" onclick="window.print()">
                             <i class="fas fa-download me-2"></i>
                             Export
                         </button>

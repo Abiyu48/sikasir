@@ -67,11 +67,237 @@
     border-radius: 0.5rem;
   }
 
-        .form-control::-webkit-outer-spin-button,
-        .form-control::-webkit-inner-spin-button {
-            -webkit-appearance: none;
-            margin: 0;
-        }
+  .form-control::-webkit-outer-spin-button,
+  .form-control::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  
+  /* Style untuk field yang required */
+  .form-select.is-invalid {
+    border-color: #dc3545;
+  }
+  
+  .invalid-feedback {
+    display: block;
+    width: 100%;
+    margin-top: 0.25rem;
+    font-size: 0.875em;
+    color: #dc3545;
+  }
+
+  /* New styles for checkout section */
+  .checkout-header {
+    background: #e8f4fd;
+    padding: 12px 15px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    font-weight: 600;
+    color: #2c5282;
+  }
+
+  .keranjang-table {
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+
+  .keranjang-table .table {
+    margin-bottom: 0;
+  }
+
+  .keranjang-table .table thead th {
+    background: #f8f9fa;
+    border-bottom: 2px solid #dee2e6;
+    font-weight: 600;
+    font-size: 0.85rem;
+    padding: 12px 8px;
+  }
+
+  .keranjang-table .table tbody td {
+    padding: 10px 8px;
+    border-bottom: 1px solid #e9ecef;
+    font-size: 0.85rem;
+  }
+
+  .customer-section {
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+
+  .total-section {
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+
+  .total-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid #e9ecef;
+  }
+
+  .total-row:last-child {
+    border-bottom: none;
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: #2c5282;
+  }
+
+  .btn-checkout {
+    background: #10b981;
+    border: none;
+    padding: 12px;
+    font-weight: 600;
+    border-radius: 8px;
+    margin-top: 15px;
+  }
+
+  .btn-checkout:hover {
+    background: #059669;
+  }
+
+  .quantity-controls {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .quantity-controls .btn {
+    width: 25px;
+    height: 25px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+  }
+
+  .quantity-controls input {
+    width: 40px;
+    text-align: center;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 2px;
+  }
+
+  .voucher-section {
+    display: none; /* Hidden as per requirement */
+  }
+
+  /* Category Cards Styles */
+  .category-section {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+
+  .category-cards {
+    display: flex;
+    gap: 15px;
+    overflow-x: auto;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+  }
+
+  .category-card {
+    min-width: 120px;
+    padding: 15px;
+    border-radius: 12px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .category-card:nth-child(1) { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+  .category-card:nth-child(2) { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
+  .category-card:nth-child(3) { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
+  .category-card:nth-child(4) { background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); }
+  .category-card:nth-child(5) { background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); }
+  .category-card:nth-child(6) { background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); color: #333; }
+  .category-card:nth-child(7) { background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%); color: #333; }
+  .category-card:nth-child(8) { background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%); color: #333; }
+
+  .category-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: rgba(255,255,255,0.1);
+    transform: rotate(45deg);
+    transition: all 0.3s ease;
+    opacity: 0;
+  }
+
+  .category-card:hover::before {
+    opacity: 1;
+    transform: rotate(45deg) translate(20px, 20px);
+  }
+
+  .category-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+  }
+
+  .category-card.active {
+    border-color: #007bff;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0,123,255,0.3);
+  }
+
+  .category-card .category-name {
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-bottom: 5px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .category-card .category-count {
+    font-size: 0.8rem;
+    opacity: 0.9;
+    position: relative;
+    z-index: 2;
+  }
+
+  .category-card .category-icon {
+    font-size: 1.5rem;
+    margin-bottom: 8px;
+    position: relative;
+    z-index: 2;
+  }
+
+  /* All Categories Card */
+  .category-card.all-categories {
+    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+    color: white;
+    border: 2px solid #34495e;
+  }
+
+  .category-card.all-categories:hover {
+    background: linear-gradient(135deg, #34495e 0%, #2c3e50 100%);
+  }
+
+  .category-card.all-categories.active {
+    border-color: #3498db;
+    box-shadow: 0 6px 20px rgba(52, 152, 219, 0.3);
+  }
 </style>
 
 <div class="container-fluid mt-4">
@@ -81,18 +307,44 @@
       <div class="menu-panel shadow">
         <h5 class="mb-3">Data Menu</h5>
 
-        <!-- Filter Kategori dan Pencarian -->
-        <div class="row mb-3">
-          <div class="col-md-6">
-            <select id="filterKategori" class="form-select">
-              <option value="">Semua Kategori</option>
-              @foreach($kategori as $kat)
-                <option value="{{ $kat->id }}">{{ $kat->nama }}</option>
-              @endforeach
-            </select>
+        <!-- Category Cards Section -->
+        <div class="category-section">
+          <h6 class="mb-3">Pilih Kategori</h6>
+          <div class="category-cards">
+            <!-- All Categories Card -->
+            <div class="category-card all-categories active" data-kategori-id="">
+              <div class="category-icon">🍽️</div>
+              <div class="category-name">Semua</div>
+              <div class="category-count">{{ $menu->count() }} item</div>
+            </div>
+            
+            <!-- Dynamic Category Cards -->
+            @php
+              $categoryIcons = ['🍔', '🍕', '🥗', '🍜', '🧃', '🍰', '🍱', '🌮'];
+              $iconIndex = 0;
+            @endphp
+            @foreach($kategori as $kat)
+              @php
+                $menuCount = $menu->where('kategori_id', $kat->id)->count();
+                $icon = $categoryIcons[$iconIndex % count($categoryIcons)];
+                $iconIndex++;
+              @endphp
+              <div class="category-card" data-kategori-id="{{ $kat->id }}">
+                <div class="category-icon">{{ $icon }}</div>
+                <div class="category-name">{{ $kat->nama }}</div>
+                <div class="category-count">{{ $menuCount }} item</div>
+              </div>
+            @endforeach
           </div>
-          <div class="col-md-6">
-            <input type="text" id="searchMenu" class="form-control" placeholder="Cari menu...">
+        </div>
+
+        <!-- Search Section -->
+        <div class="row mb-3">
+          <div class="col-md-12">
+            <div class="input-group">
+              <span class="input-group-text"><i class="fas fa-search"></i></span>
+              <input type="text" id="searchMenu" class="form-control" placeholder="Cari menu berdasarkan nama...">
+            </div>
           </div>
         </div>
 
@@ -116,11 +368,6 @@
                     </small>
                   </p>
                   @if($item->stok > 0)
-                    <div class="input-group mb-2">
-                      <button class="btn btn-outline-secondary btn-sm btn-minus" type="button">-</button>
-                      <input type="number" class="form-control form-control-sm text-center qty-input" value="1" min="1" max="{{ $item->stok }}">
-                      <button class="btn btn-outline-secondary btn-sm btn-plus" type="button">+</button>
-                    </div>
                     <button class="btn btn-success btn-sm btn-add-cart w-100"
                       data-id="{{ $item->id }}"
                       data-nama="{{ $item->nama}}"
@@ -142,70 +389,91 @@
     <!-- Keranjang -->
     <div class="col-md-4">
       <div class="keranjang-panel shadow">
-        <h5 class="mb-3">Keranjang</h5>
+        <div class="checkout-header">
+          <i class="fas fa-receipt me-2"></i>Nama Pelanggan ✏️
+        </div>
+
         <form action="{{ route('transaksi.simpan') }}" method="POST" onsubmit="return submitKeranjang(event)">
           @csrf
-          <div class="mb-2">
-            <label>No Bon/Nota</label>
-            <input type="text" class="form-control form-control-sm" name="no_bon" value="{{ $newNoBon }}" readonly>
-          </div>
-          <div class="mb-2">
-            <label>Customer</label>
-            <select name="customer_id" class="form-select form-select-sm">
+          
+          <!-- Customer Selection -->
+          <div class="customer-section">
+            <label class="form-label mb-2">Pilih Customer <span class="text-danger">*</span></label>
+            <select name="customer_id" id="customerSelect" class="form-select" required>
               <option value="">Pilih Customer</option>
               @foreach($customers as $cust)
                 <option value="{{ $cust->id }}">{{ $cust->nama }}</option>
               @endforeach
             </select>
-            <small class="text-muted">*Untuk customer yang sudah terdaftar</small>
+            <div class="invalid-feedback" id="customerError"></div>
+            
+            <div class="mt-3">
+              <label class="form-label mb-2">Atas Nama <span class="text-danger">*</span></label>
+              <input type="text" class="form-control" name="atas_nama" id="atasNamaInput" placeholder="Nama Pemesan" required>
+              <div class="invalid-feedback" id="atasNamaError"></div>
+            </div>
           </div>
-          <div class="mb-2">
-            <label>Atas Nama</label>
-            <input type="text" class="form-control form-control-sm" name="atas_nama" placeholder="Nama Pemesan">
-          </div>
-          <div class="mb-2">
-            <h6><i class="fas fa-shopping-cart"></i> List Keranjang</h6>
-            <table class="table table-bordered table-sm">
-              <thead class="table-light">
+
+          <!-- Cart Items -->
+          <div class="keranjang-table">
+            <table class="table">
+              <thead>
                 <tr>
-                  <th>No</th>
-                  <th>Nama</th>
-                  <th>Qty</th>
-                  <th>Harga</th>
-                  <th>Aksi</th>
+                  <th style="width: 50%">Item</th>
+                  <th style="width: 15%">Qty</th>
+                  <th style="width: 25%">Harga</th>
+                  <th style="width: 10%"></th>
                 </tr>
               </thead>
-              <tbody id="keranjangList"></tbody>
+              <tbody id="keranjangList">
+                <!-- Cart items will be populated here -->
+              </tbody>
             </table>
           </div>
-          <div class="mb-2">
-            <label>Status Pembayaran</label>
-            <select name="status_pembayaran" class="form-select form-select-sm">
-              <option value="cash">Cash</option>
-              <option value="cashless">Cashless</option>
-            </select>
+
+          <!-- Order Details -->
+          <div class="customer-section mt-3">
+            <div class="row">
+              <div class="col-6">
+                <label class="form-label mb-2">Pembayaran</label>
+                <select name="status_pembayaran" class="form-select form-select-sm">
+                  <option value="cash">Cash</option>
+                  <option value="cashless">Cashless</option>
+                </select>
+              </div>
+              <div class="col-6">
+                <label class="form-label mb-2">Order Type</label>
+                <select name="order_type" class="form-select form-select-sm">
+                  <option value="dine_in">Dine In</option>
+                  <option value="take_away">Take Away</option>
+                </select>
+              </div>
+            </div>
           </div>
-          <div class="mb-2">
-            <label>Order</label>
-            <select name="order_type" class="form-select form-select-sm">
-              <option value="dine_in">Dine In</option>
-              <option value="take_away">Take Away</option>
-            </select>
+
+          <!-- Total Section -->
+          <div class="total-section">
+            <div class="total-row">
+              <span>Subtotal</span>
+              <span id="subtotalDisplay">Rp 0</span>
+            </div>
+            <div class="total-row">
+              <span>Tax (10%)</span>
+              <span id="taxDisplay">Rp 0</span>
+            </div>
+            <div class="total-row">
+              <span>Total</span>
+              <span id="totalDisplay">Rp 0</span>
+            </div>
           </div>
-          <div class="mb-2">
-            <label>Total Bayar</label>
-            <input type="text" class="form-control form-control-sm" id="totalBayar" readonly>
-          </div>
-          <div class="mb-2">
-            <label>Pajak (10%)</label>
-            <input type="text" class="form-control form-control-sm" id="pajak" readonly>
-          </div>
-          <div class="mb-3">
-            <label>Grand Total</label>
-            <input type="text" class="form-control form-control-sm" id="grandTotal" readonly>
-          </div>
+
+          <!-- Hidden Inputs -->
+          <input type="hidden" name="no_bon" value="{{ $newNoBon }}">
           <input type="hidden" name="keranjang" id="inputKeranjang">
-          <button type="submit" class="btn btn-success mt-3 w-100">Simpan Transaksi</button>
+          
+          <button type="submit" class="btn btn-success btn-checkout w-100">
+            <i class="fas fa-check me-2"></i>Proses Pesanan
+          </button>
         </form>
       </div>
     </div>
@@ -218,12 +486,42 @@
 document.addEventListener('DOMContentLoaded', function () {
   let keranjang = [];
 
+  // Fungsi untuk menghilangkan pesan error
+  function clearFieldError(fieldId, errorId) {
+    const field = document.getElementById(fieldId);
+    const errorDiv = document.getElementById(errorId);
+    
+    field.classList.remove('is-invalid');
+    errorDiv.textContent = '';
+  }
+
+  // Fungsi untuk menampilkan pesan error
+  function showFieldError(fieldId, errorId, message) {
+    const field = document.getElementById(fieldId);
+    const errorDiv = document.getElementById(errorId);
+    
+    field.classList.add('is-invalid');
+    errorDiv.textContent = message;
+  }
+
+  // Event listener untuk customer select
+  document.getElementById('customerSelect').addEventListener('change', function() {
+    if (this.value !== '') {
+      clearFieldError('customerSelect', 'customerError');
+    }
+  });
+
+  // Event listener untuk atas nama input
+  document.getElementById('atasNamaInput').addEventListener('input', function() {
+    if (this.value.trim() !== '') {
+      clearFieldError('atasNamaInput', 'atasNamaError');
+    }
+  });
+
   function updateStokDisplay(menuId, newStok) {
     const cardElement = document.querySelector(`[data-id="${menuId}"]`).closest('.card-menu');
     const stokElement = cardElement.querySelector('.stok');
-    const qtyInput = cardElement.querySelector('.qty-input');
     const btnAddCart = cardElement.querySelector('.btn-add-cart');
-    const inputGroup = cardElement.querySelector('.input-group');
     
     if (newStok <= 0) {
       // Jika stok habis
@@ -236,8 +534,7 @@ document.addEventListener('DOMContentLoaded', function () {
         stokContainer.innerHTML = 'Stok: <span class="stock-habis">STOK HABIS</span>';
       }
       
-      // Disable dan sembunyikan input group dan tombol
-      if (inputGroup) inputGroup.style.display = 'none';
+      // Disable dan sembunyikan tombol
       if (btnAddCart) {
         btnAddCart.style.display = 'none';
         // Buat tombol disabled jika belum ada
@@ -263,17 +560,7 @@ document.addEventListener('DOMContentLoaded', function () {
         stokContainer.innerHTML = `Stok: <span class="stok">${newStok}</span>`;
       }
       
-      // Update max value untuk quantity input
-      if (qtyInput) {
-        qtyInput.max = newStok;
-        if (parseInt(qtyInput.value) > newStok) {
-          qtyInput.value = newStok;
-        }
-        updateQtyButtons(qtyInput);
-      }
-      
-      // Show input group dan tombol jika sebelumnya hidden
-      if (inputGroup) inputGroup.style.display = 'flex';
+      // Show tombol jika sebelumnya hidden
       if (btnAddCart) btnAddCart.style.display = 'block';
       
       // Hapus tombol disabled jika ada
@@ -285,106 +572,71 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 
-  function updateQtyButtons(input) {
-    const btnGroup = input.closest('.input-group');
-    const btnMinus = btnGroup.querySelector('.btn-minus');
-    const btnPlus = btnGroup.querySelector('.btn-plus');
-    const val = parseInt(input.value);
-    const min = parseInt(input.min);
-    const max = parseInt(input.max);
-    
-    btnMinus.disabled = val <= min;
-    btnPlus.disabled = val >= max;
-    
-    // Validasi input manual
-    if (val > max) {
-      input.value = max;
-      alert(`Maksimal quantity adalah ${max} (sesuai stok yang tersedia)`);
-    } else if (val < min) {
-      input.value = min;
-    }
-  }
-
   function renderKeranjang() {
     const tbody = document.getElementById('keranjangList');
     tbody.innerHTML = '';
-    keranjang.forEach((item, index) => {
+    
+    if (keranjang.length === 0) {
       const row = document.createElement('tr');
       row.innerHTML = `
-        <td>${index + 1}</td>
-        <td>${item.nama}</td>
-        <td>${item.jumlah}</td>
-        <td>Rp ${item.harga.toLocaleString()}</td>
-        <td><button type="button" class="btn btn-sm btn-danger btn-hapus" data-id="${item.id}">Hapus</button></td>
+        <td colspan="4" class="text-center text-muted py-4">
+          <i class="fas fa-shopping-cart fa-2x mb-2 d-block"></i>
+          Keranjang masih kosong
+        </td>
       `;
       tbody.appendChild(row);
-    });
+    } else {
+      keranjang.forEach((item, index) => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>
+            <div class="fw-semibold">${item.nama}</div>
+            <small class="text-muted">Rp ${item.harga.toLocaleString()}</small>
+          </td>
+          <td>
+            <div class="quantity-controls">
+              <button type="button" class="btn btn-outline-secondary btn-sm btn-qty-minus" data-id="${item.id}">-</button>
+              <input type="number" class="qty-display" value="${item.jumlah}" readonly>
+              <button type="button" class="btn btn-outline-secondary btn-sm btn-qty-plus" data-id="${item.id}">+</button>
+            </div>
+          </td>
+          <td class="fw-semibold">Rp ${(item.harga * item.jumlah).toLocaleString()}</td>
+          <td>
+            <button type="button" class="btn btn-sm btn-outline-danger btn-hapus" data-id="${item.id}">
+              <i class="fas fa-trash"></i>
+            </button>
+          </td>
+        `;
+        tbody.appendChild(row);
+      });
+    }
 
     hitungTotal();
     updateHiddenInput();
   }
 
   function hitungTotal() {
-    let total = 0;
-    keranjang.forEach(item => total += item.harga * item.jumlah);
-    const pajak = total * 0.10;
-    const grandTotal = total + pajak;
+    let subtotal = 0;
+    keranjang.forEach(item => subtotal += item.harga * item.jumlah);
+    const tax = subtotal * 0.10;
+    const total = subtotal + tax;
 
-    document.getElementById('totalBayar').value = `Rp ${total.toLocaleString()}`;
-    document.getElementById('pajak').value = `Rp ${pajak.toLocaleString()}`;
-    document.getElementById('grandTotal').value = `Rp ${grandTotal.toLocaleString()}`;
+    document.getElementById('subtotalDisplay').textContent = `Rp ${subtotal.toLocaleString()}`;
+    document.getElementById('taxDisplay').textContent = `Rp ${tax.toLocaleString()}`;
+    document.getElementById('totalDisplay').textContent = `Rp ${total.toLocaleString()}`;
   }
 
   function updateHiddenInput() {
     document.getElementById('inputKeranjang').value = JSON.stringify(keranjang);
   }
 
-  // Event listener untuk quantity input
-  document.querySelectorAll('.qty-input').forEach(input => {
-    input.addEventListener('input', () => updateQtyButtons(input));
-    input.addEventListener('keyup', () => updateQtyButtons(input));
-    input.addEventListener('change', () => updateQtyButtons(input));
-    updateQtyButtons(input);
-  });
-
-  // Event listener untuk tombol plus
-  document.querySelectorAll('.btn-plus').forEach(btn =>
-    btn.addEventListener('click', function () {
-      const input = this.closest('.input-group').querySelector('.qty-input');
-      const currentVal = parseInt(input.value);
-      const maxVal = parseInt(input.max);
-      
-      if (currentVal < maxVal) {
-        input.value = currentVal + 1;
-        input.dispatchEvent(new Event('input'));
-      } else {
-        alert(`Maksimal quantity adalah ${maxVal} (sesuai stok yang tersedia)`);
-      }
-    })
-  );
-
-  // Event listener untuk tombol minus
-  document.querySelectorAll('.btn-minus').forEach(btn =>
-    btn.addEventListener('click', function () {
-      const input = this.closest('.input-group').querySelector('.qty-input');
-      const currentVal = parseInt(input.value);
-      const minVal = parseInt(input.min);
-      
-      if (currentVal > minVal) {
-        input.value = currentVal - 1;
-        input.dispatchEvent(new Event('input'));
-      }
-    })
-  );
-
-  // Event listener untuk tombol tambah ke keranjang
+  // Event listener untuk tombol tambah ke keranjang (quantity default = 1)
   document.querySelectorAll('.btn-add-cart').forEach(button =>
     button.addEventListener('click', function () {
       const id = this.dataset.id;
       const nama = this.dataset.nama;
       const harga = parseInt(this.dataset.harga);
-      const qtyInput = this.closest('.card').querySelector('.qty-input');
-      const jumlah = parseInt(qtyInput.value);
+      const jumlah = 1; // Default quantity = 1
       const cardElement = this.closest('.card-menu');
       const stokElement = cardElement.querySelector('.stok');
       
@@ -394,12 +646,6 @@ document.addEventListener('DOMContentLoaded', function () {
       // Cek apakah stok mencukupi
       if (currentStok <= 0) {
         alert('Stok habis!');
-        return;
-      }
-
-      // Cek apakah quantity yang diminta melebihi stok
-      if (jumlah > currentStok) {
-        alert(`Tidak dapat menambah item. Quantity melebihi stok yang tersedia (${currentStok})`);
         return;
       }
 
@@ -414,18 +660,14 @@ document.addEventListener('DOMContentLoaded', function () {
       // Update tampilan stok
       updateStokDisplay(id, currentStok - jumlah);
       
-      // Reset quantity input ke 1
-      qtyInput.value = 1;
-      updateQtyButtons(qtyInput);
-      
       renderKeranjang();
     })
   );
 
-  // Event listener untuk hapus item dari keranjang
+  // Event listener untuk hapus item dari keranjang dan update quantity
   document.getElementById('keranjangList').addEventListener('click', function (e) {
-    if (e.target.classList.contains('btn-hapus')) {
-      const id = e.target.dataset.id;
+    if (e.target.closest('.btn-hapus')) {
+      const id = e.target.closest('.btn-hapus').dataset.id;
       const itemToRemove = keranjang.find(item => item.id === id);
       
       if (itemToRemove) {
@@ -442,19 +684,58 @@ document.addEventListener('DOMContentLoaded', function () {
         renderKeranjang();
       }
     }
+
+    // Handle quantity buttons in cart
+    if (e.target.closest('.btn-qty-plus')) {
+      const id = e.target.closest('.btn-qty-plus').dataset.id;
+      const item = keranjang.find(item => item.id === id);
+      const cardElement = document.querySelector(`[data-id="${id}"]`).closest('.card-menu');
+      const stokElement = cardElement.querySelector('.stok');
+      let currentStok = stokElement ? parseInt(stokElement.textContent) : 0;
+      
+      if (currentStok > 0) {
+        item.jumlah += 1;
+        updateStokDisplay(id, currentStok - 1);
+        renderKeranjang();
+      } else {
+        alert('Stok tidak mencukupi!');
+      }
+    }
+
+    if (e.target.closest('.btn-qty-minus')) {
+      const id = e.target.closest('.btn-qty-minus').dataset.id;
+      const item = keranjang.find(item => item.id === id);
+      
+      if (item.jumlah > 1) {
+        const cardElement = document.querySelector(`[data-id="${id}"]`).closest('.card-menu');
+        const stokElement = cardElement.querySelector('.stok');
+        let currentStok = stokElement ? parseInt(stokElement.textContent) : 0;
+        
+        item.jumlah -= 1;
+        updateStokDisplay(id, currentStok + 1);
+        renderKeranjang();
+      }
+    }
   });
 
-  // Filter kategori
-  document.getElementById('filterKategori').addEventListener('change', function () {
-    const selectedKategori = this.value;
-    const menuItems = document.querySelectorAll('.menu-item');
-    
-    menuItems.forEach(item => {
-      if (selectedKategori === '' || item.dataset.kategoriId === selectedKategori) {
-        item.style.display = 'block';
-      } else {
-        item.style.display = 'none';
-      }
+  // Category filter event listener
+  document.querySelectorAll('.category-card').forEach(card => {
+    card.addEventListener('click', function () {
+      const selectedKategori = this.dataset.kategoriId;
+      const menuItems = document.querySelectorAll('.menu-item');
+      
+      // Update active category
+      document.querySelectorAll('.category-card').forEach(c => c.classList.remove('active'));
+      this.classList.add('active');
+      
+      // Filter menu items
+      menuItems.forEach(item => {
+        if (selectedKategori === '' || item.dataset.kategoriId === selectedKategori) {
+          item.style.display = 'block';
+        } else {
+          item.style.display = 'none';
+        }
+      });
     });
   });
 
@@ -471,23 +752,52 @@ document.addEventListener('DOMContentLoaded', function () {
         item.style.display = 'none';
       }
     });
+    
+    // Reset category selection when searching
+    if (searchTerm.length > 0) {
+      document.querySelectorAll('.category-card').forEach(c => c.classList.remove('active'));
+    }
   });
+
+  // Initial render
+  renderKeranjang();
 });
 
 function submitKeranjang(event) {
-  const keranjangData = document.getElementById('inputKeranjang').value;
+  let hasError = false;
   
+  // Validasi keranjang
+  const keranjangData = document.getElementById('inputKeranjang').value;
   if (keranjangData === '[]' || keranjangData === '' || keranjangData === null) {
     alert('Keranjang masih kosong!');
     event.preventDefault();
     return false;
   }
   
-  // Validasi field wajib
-  const atasNama = document.querySelector('input[name="atas_nama"]').value.trim();
+  // Validasi customer
+  const customerSelect = document.getElementById('customerSelect');
+  if (customerSelect.value === '' || customerSelect.value === null) {
+    showFieldError('customerSelect', 'customerError', 'Customer harus dipilih!');
+    hasError = true;
+  }
+  
+  // Validasi atas nama
+  const atasNama = document.getElementById('atasNamaInput').value.trim();
   if (atasNama === '') {
-    alert('Nama pemesan harus diisi!');
+    showFieldError('atasNamaInput', 'atasNamaError', 'Nama pemesan harus diisi!');
+    hasError = true;
+  }
+  
+  if (hasError) {
     event.preventDefault();
+    
+    // Scroll ke field pertama yang error
+    const firstErrorField = document.querySelector('.is-invalid');
+    if (firstErrorField) {
+      firstErrorField.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      firstErrorField.focus();
+    }
+    
     return false;
   }
   
