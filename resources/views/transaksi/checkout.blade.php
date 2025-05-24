@@ -13,6 +13,10 @@
           <div class="row mb-4">
             <div class="col-md-6">
               <div class="info-group">
+                <label class="fw-bold">Nama Customer:</label>
+                <p class="mb-2">{{ $nama_customer ?? 'Guest' }}</p>
+              </div>
+              <div class="info-group">
                 <label class="fw-bold">Tanggal/Waktu:</label>
                 <p class="mb-2">{{ $tanggal ?? date('d-m-Y H:i:s') }}</p>
               </div>

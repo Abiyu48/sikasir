@@ -676,7 +676,7 @@
                 </div>
                 <div class="card-content">
                     <div class="payment-status">
-                        @if($penjualan->status_pembayaran == 'lunas')
+                        @if($penjualan->status_pembayaran == 'cash')
                             <div class="status-indicator status-success">
                                 <i class="fas fa-check-circle"></i>
                                 <span>LUNAS</span>
@@ -777,7 +777,7 @@
     <div class="row mt-4">
         <div class="col-12">
             <div class="action-buttons">
-                <button class="btn btn-print">
+                <button class="btn btn-print" onclick="window.print()">
                     <i class="fas fa-print"></i>
                     <span>Cetak Struk</span>
                 </button>

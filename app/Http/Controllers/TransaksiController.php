@@ -185,7 +185,18 @@ class TransaksiController extends Controller
         $no_bon = $checkout['no_bon'] ?? 'TRX-' . now()->format('YmdHis');
         $metode_pembayaran = $checkout['status_pembayaran'] ?? 'cash';
 
-        return view('transaksi.checkout', compact('keranjang', 'tanggal', 'no_bon','metode_pembayaran'));
+        // Ambil data customer jika ada
+        $customer = null;
+        $nama_customer = 'Guest';
+        
+        if (isset($checkout['customer_id']) && $checkout['customer_id']) {
+            $customer = Customer::find($checkout['customer_id']);
+            if ($customer) {
+                $nama_customer = $customer->nama;
+            }
+        }
+
+        return view('transaksi.checkout', compact('keranjang', 'tanggal', 'no_bon', 'metode_pembayaran', 'customer', 'nama_customer'));
     }
 
     public function konfirmasiCheckout(Request $request)
