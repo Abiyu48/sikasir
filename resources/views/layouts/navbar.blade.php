@@ -4,12 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>SiKasir</title>
-
-  <!-- Bootstrap CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-
-  <!-- Font Awesome -->
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
     body {
@@ -55,7 +54,7 @@
             <ul class="dropdown-menu" aria-labelledby="dataMasterDropdown">
               <li><a class="dropdown-item" href="{{ route('kategori.index') }}"><i class="fas fa-list"></i> Kategori</a></li>
               <li><a class="dropdown-item" href="{{ route('menu.index') }}"><i class="fas fa-utensils"></i> Menu</a></li>
-              <li><a class="dropdown-item" href="{{ route('customer.index') }}"><i class="fas fa-users"></i> Customer</a></li>
+              <li><a class="dropdown-item" href="{{ route('customer.index') }}"><i class="fas fa-users"></i> Kasir</a></li>
               <li><a class="dropdown-item" href="{{ route('user.index') }}"><i class="fas fa-user-cog"></i> Pengguna</a></li>
             </ul>
           </li>
@@ -69,13 +68,6 @@
               <li><a class="dropdown-item" href="{{ route('menu.index') }}"><i class="fas fa-boxes"></i> Entri Stok</a></li>
               <li><a class="dropdown-item" href="{{ route('stok.index') }}"><i class="fas fa-clipboard-list"></i> Daftar Stok</a></li>
             </ul>
-          </li>
-
-          <!-- Kasir -->
-          <li class="nav-item">
-            <a class="nav-link" href="{{ route('transaksi.index') }}">
-              <i class="fas fa-cash-register"></i> Kasir
-            </a>
           </li>
         @endif
 

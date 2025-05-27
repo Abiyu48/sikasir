@@ -9,7 +9,12 @@ class DetailPenjualan extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['penjualan_id', 'menu_id', 'jumlah', 'harga'];
+    protected $fillable = [
+        'penjualan_id', 
+        'menu_id', 
+        'jumlah', 
+        'harga'
+    ];
 
     protected $casts = [
         'harga' => 'decimal:2',
@@ -33,12 +38,29 @@ class DetailPenjualan extends Model
     }
 
     /**
-     * Accessor untuk subtotal
-     * Menghitung subtotal dari jumlah * harga
+     * Accessor untuk subtotal sebelum pajak
+     */
+    public function getSubtotalBeforeTaxAttribute()
+    {
+        return $this->jumlah * $this->harga;
+    }
+
+    /**
+     * Accessor untuk pajak 10%
+     */
+    public function getPajakAttribute()
+    {
+        return ($this->jumlah * $this->harga) * 0.1;
+    }
+
+    /**
+     * Accessor untuk subtotal termasuk pajak
      */
     public function getSubtotalAttribute()
     {
-        return $this->jumlah * $this->harga;
+        $subtotalBeforeTax = $this->jumlah * $this->harga;
+        $pajak = $subtotalBeforeTax * 0.1;
+        return $subtotalBeforeTax + $pajak;
     }
 
     /**

@@ -193,111 +193,86 @@
   }
 
   /* Category Cards Styles */
-  .category-section {
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
-    margin-bottom: 20px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  }
+/* Updated Category Cards Styles - No Icons */
+.category-section {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
 
-  .category-cards {
-    display: flex;
-    gap: 15px;
-    overflow-x: auto;
-    padding-bottom: 10px;
-    margin-bottom: 20px;
-  }
+.category-cards {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
 
-  .category-card {
-    min-width: 120px;
-    padding: 15px;
-    border-radius: 12px;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    border: 2px solid transparent;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    position: relative;
-    overflow: hidden;
-  }
+.category-card {
+  min-width: 100px;
+  padding: 12px 16px;
+  border-radius: 25px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 1px solid #e0e0e0;
+  background: #f8f9fa;
+  color: #6c757d;
+  font-weight: 500;
+  font-size: 0.85rem;
+  white-space: nowrap;
+  position: relative;
+  overflow: hidden;
+}
 
-  .category-card:nth-child(1) { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
-  .category-card:nth-child(2) { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
-  .category-card:nth-child(3) { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
-  .category-card:nth-child(4) { background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); }
-  .category-card:nth-child(5) { background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); }
-  .category-card:nth-child(6) { background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); color: #333; }
-  .category-card:nth-child(7) { background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%); color: #333; }
-  .category-card:nth-child(8) { background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%); color: #333; }
+.category-card:hover {
+  background: white;
+  color: #495057;
+  border-color: #dee2e6;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
 
-  .category-card::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: rgba(255,255,255,0.1);
-    transform: rotate(45deg);
-    transition: all 0.3s ease;
-    opacity: 0;
-  }
+.category-card.active {
+  background: #2196F3;
+  color: white;
+  border-color: #2196F3;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(33, 150, 243, 0.3);
+}
 
-  .category-card:hover::before {
-    opacity: 1;
-    transform: rotate(45deg) translate(20px, 20px);
-  }
+.category-card .category-name {
+  font-weight: 500;
+  font-size: 0.85rem;
+  margin: 0 0 4px 0;
+}
 
-  .category-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
-  }
+.category-card .category-count {
+  font-size: 0.75rem;
+  opacity: 0.8;
+  margin: 0;
+}
 
-  .category-card.active {
-    border-color: #007bff;
-    transform: translateY(-3px);
-    box-shadow: 0 6px 20px rgba(0,123,255,0.3);
-  }
+/* All Categories Card - special styling */
+.category-card.all-categories {
+  background: #f8f9fa;
+  color: #6c757d;
+  border: 1px solid #e0e0e0;
+}
 
-  .category-card .category-name {
-    font-weight: 600;
-    font-size: 0.9rem;
-    margin-bottom: 5px;
-    position: relative;
-    z-index: 2;
-  }
+.category-card.all-categories:hover {
+  background: white;
+  color: #495057;
+  border-color: #dee2e6;
+}
 
-  .category-card .category-count {
-    font-size: 0.8rem;
-    opacity: 0.9;
-    position: relative;
-    z-index: 2;
-  }
-
-  .category-card .category-icon {
-    font-size: 1.5rem;
-    margin-bottom: 8px;
-    position: relative;
-    z-index: 2;
-  }
-
-  /* All Categories Card */
-  .category-card.all-categories {
-    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
-    color: white;
-    border: 2px solid #34495e;
-  }
-
-  .category-card.all-categories:hover {
-    background: linear-gradient(135deg, #34495e 0%, #2c3e50 100%);
-  }
-
-  .category-card.all-categories.active {
-    border-color: #3498db;
-    box-shadow: 0 6px 20px rgba(52, 152, 219, 0.3);
-  }
+.category-card.all-categories.active {
+  background: #2196F3;
+  color: white;
+  border-color: #2196F3;
+}
 </style>
 
 <div class="container-fluid mt-4">
@@ -313,24 +288,16 @@
           <div class="category-cards">
             <!-- All Categories Card -->
             <div class="category-card all-categories active" data-kategori-id="">
-              <div class="category-icon">🍽️</div>
               <div class="category-name">Semua</div>
               <div class="category-count">{{ $menu->count() }} item</div>
             </div>
-            
+
             <!-- Dynamic Category Cards -->
-            @php
-              $categoryIcons = ['🍔', '🍕', '🥗', '🍜', '🧃', '🍰', '🍱', '🌮'];
-              $iconIndex = 0;
-            @endphp
             @foreach($kategori as $kat)
               @php
                 $menuCount = $menu->where('kategori_id', $kat->id)->count();
-                $icon = $categoryIcons[$iconIndex % count($categoryIcons)];
-                $iconIndex++;
               @endphp
               <div class="category-card" data-kategori-id="{{ $kat->id }}">
-                <div class="category-icon">{{ $icon }}</div>
                 <div class="category-name">{{ $kat->nama }}</div>
                 <div class="category-count">{{ $menuCount }} item</div>
               </div>
@@ -398,21 +365,14 @@
           
           <!-- Customer Selection -->
           <div class="customer-section">
-            <label class="form-label mb-2">Pilih Customer <span class="text-danger">*</span></label>
+            <label class="form-label mb-2">Pilih Kasir <span class="text-danger">*</span></label>
             <select name="customer_id" id="customerSelect" class="form-select" required>
-              <option value="">Pilih Customer</option>
+              <option value="">Pilih Kasir</option>
               @foreach($customers as $cust)
                 <option value="{{ $cust->id }}">{{ $cust->nama }}</option>
               @endforeach
             </select>
             <div class="invalid-feedback" id="customerError"></div>
-            
-            <div class="mt-3">
-              <label class="form-label mb-2">Atas Nama <span class="text-danger">*</span></label>
-              <input type="text" class="form-control" name="atas_nama" id="atasNamaInput" placeholder="Nama Pemesan" required>
-              <div class="invalid-feedback" id="atasNamaError"></div>
-            </div>
-          </div>
 
           <!-- Cart Items -->
           <div class="keranjang-table">
@@ -508,13 +468,6 @@ document.addEventListener('DOMContentLoaded', function () {
   document.getElementById('customerSelect').addEventListener('change', function() {
     if (this.value !== '') {
       clearFieldError('customerSelect', 'customerError');
-    }
-  });
-
-  // Event listener untuk atas nama input
-  document.getElementById('atasNamaInput').addEventListener('input', function() {
-    if (this.value.trim() !== '') {
-      clearFieldError('atasNamaInput', 'atasNamaError');
     }
   });
 
@@ -781,13 +734,7 @@ function submitKeranjang(event) {
     hasError = true;
   }
   
-  // Validasi atas nama
-  const atasNama = document.getElementById('atasNamaInput').value.trim();
-  if (atasNama === '') {
-    showFieldError('atasNamaInput', 'atasNamaError', 'Nama pemesan harus diisi!');
-    hasError = true;
-  }
-  
+
   if (hasError) {
     event.preventDefault();
     

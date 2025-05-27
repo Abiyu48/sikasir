@@ -289,12 +289,8 @@
                     <span class="info-label">Tanggal:</span>
                     <span class="info-value">{{ $penjualan->tanggal->format('d/m/Y H:i:s') }}</span>
                 </div>
-                <!-- <div class="info-row">
-                    <span class="info-label">Kasir:</span>
-                    <span class="info-value">{{ $penjualan->user->name ?? 'System' }}</span>
-                </div> -->
                 <div class="info-row">
-                    <span class="info-label">Customer:</span>
+                    <span class="info-label">Kasir:</span>
                     <span class="info-value">{{ $penjualan->customer->nama ?? $penjualan->atas_nama ?? 'Guest' }}</span>
                 </div>
                 <div class="info-row">
@@ -334,23 +330,26 @@
             <!-- Totals -->
             <div class="totals-section">
                 @php
-                    $subtotalBeforeTax = $penjualan->detailPenjualan->sum(function($detail) {
-                        return $detail->harga * $detail->jumlah;
-                    });
+                    // Hitung subtotal sebelum pajak (harga * jumlah)
+                    $subtotalBeforeTax = $penjualan->detailPenjualan->sum('subtotal_before_tax');
+                    
                     $totalTax = $penjualan->detailPenjualan->sum('pajak');
+                    
+                    // Total keseluruhan
+                     $grandTotal = $subtotalBeforeTax + $totalTax;
                 @endphp
                 
                 <div class="total-row subtotal">
                     <span>Subtotal:</span>
-                    <span>{{ number_format($subtotalBeforeTax, 0, ',', '.') }}</span>
+                    <span>Rp {{ number_format($subtotalBeforeTax, 0, ',', '.') }}</span>
                 </div>
                 <div class="total-row tax">
                     <span>Pajak (10%):</span>
-                    <span>{{ number_format($totalTax, 0, ',', '.') }}</span>
+                    <span>Rp {{ number_format($totalTax, 0, ',', '.') }}</span>
                 </div>
                 <div class="total-row grand-total">
                     <span>TOTAL:</span>
-                    <span>{{ number_format($penjualan->total, 0, ',', '.') }}</span>
+                    <span>Rp {{ number_format($grandTotal, 0, ',', '.') }}</span>
                 </div>
             </div>
 
