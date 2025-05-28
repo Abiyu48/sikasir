@@ -14,7 +14,10 @@ return new class extends Migration
     public function up()
 {
     Schema::table('penjualans', function (Blueprint $table) {
-    $table->string('no_bon')->nullable()->after('id');
+            $table->string('no_bon')->nullable()->after('id');
+            $table->string('status_pembayaran')->after('tanggal');
+            $table->string('order_type');
+            $table->string('total',12,2);
 });
 }
 
@@ -26,7 +29,8 @@ return new class extends Migration
     public function down()
     {
         Schema::table('penjualans', function (Blueprint $table) {
-            //
+                $table->dropColumn(['no_bon','status_pembayaran','order_type','total']);
+            
         });
     }
 };
